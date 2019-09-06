@@ -70,7 +70,13 @@ class ConvModel:
             self.model = Model(self.input_placeholder, self.output_placeholder)
 
             conv_size = self.model.layers[-1].output_shape[2]
-            skip_conv_1 = Conv2D(self.output_channels, kernel_size = (1, 1), padding = 'same', name = 'score_pool4')
+            skip_conv_1 = Conv2D(
+                self.output_channels,
+                kernel_size = (1, 1),
+                padding = 'same',
+                name = 'score_pool4',
+                activation = 'relu'
+            )
             concatenated = add([
                 skip_conv_1(self.model.layers[14].output),
                 self.model.layers[-1].output
@@ -85,7 +91,13 @@ class ConvModel:
             )(concatenated)
             x = Cropping2D(cropping = ((0, 2), (0, 2)))(x)
 
-            skip_conv_2 = Conv2D(self.output_channels, kernel_size = (1, 1), padding = 'same', name = 'score_pool3')
+            skip_conv_2 = Conv2D(
+                self.output_channels,
+                kernel_size = (1, 1),
+                padding = 'same',
+                name = 'score_pool3',
+                activation = 'relu'
+            )
             concatenated = add([skip_conv_2(self.model.layers[10].output), x])
 
             x = Conv2DTranspose(
@@ -95,7 +107,8 @@ class ConvModel:
                 padding = 'valid',
                 name = 'Final_upsample'
             )(concatenated)
-            self.output_placeholder = Cropping2D(cropping = ((0, 8), (0, 8)))(x)
+            x = Cropping2D(cropping = ((0, 8), (0, 8)))(x)
+            self.output_placeholder = Conv2D(self.output_channels, (1, 1), activation = 'sigmoid')(x)
 
             self.model = Model(self.input_placeholder, self.output_placeholder)
 
