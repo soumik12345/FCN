@@ -4,6 +4,7 @@ from glob import glob
 from tqdm import tqdm
 from imageio import imread
 from skimage.transform import resize
+from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
@@ -49,7 +50,7 @@ class KITTIDataInterface:
             featurewise_std_normalization = True,
             zoom_range = 0.1
         ).flow(
-            x_train, x_train,
+            self.x_train, self.x_train,
             self.batch_size, seed = SEED
         )
         
@@ -58,7 +59,7 @@ class KITTIDataInterface:
             featurewise_std_normalization = True,
             zoom_range = 0.1
         ).flow(
-            y_train, y_train,
+            self.y_train, self.y_train,
             self.batch_size, seed = SEED
         )
     
