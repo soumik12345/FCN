@@ -77,3 +77,10 @@ class KITTIDataInterface:
                 ax.set_xlabel('Mask_' + str(c))
                 c += 1
         plt.show()
+    
+    @staticmethod
+    def data_generator(image_generator, mask_generator):
+        while True:
+            x_batch, _ = image_generator.next()
+            y_batch, _ = mask_generator.next()
+            yield x_batch, y_batch
