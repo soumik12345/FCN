@@ -2,6 +2,8 @@ import re, cv2, os
 import numpy as np
 from glob import glob
 from tqdm import tqdm
+from imageio import imread
+from skimage.transform import resize
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
