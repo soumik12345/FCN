@@ -23,7 +23,6 @@ class KITTIDataInterface:
         label_paths = {
             re.sub(r'_(lane|road)_', '_', os.path.basename(path)): path
             for path in glob(os.path.join(data_dir, 'gt_image_2', '*_road_*.png'))}
-        background_color = np.array([255, 0, 0])
 
         images = []
         gt_images = []
